@@ -27,7 +27,7 @@ Vagrant possède les 3 composants suivants :
 - **La synchronisation des dossiers** entre l'hôte et la VM
 - **Des configurations réseaux** : Vagrant supporte de diverses configurations de réseau (pour faire de l'inter-communication, du bridge, etc.)
 - **Les fournisseurs / *providers***, qui sont des plugins permettant d'utiliser des configurations spécifiques, relatives à un hyperviseur
-- **Les approvisionenurs / *provisioners*, qui sont des tâches qui peuvent alimenter une VM durant son exécution (installation d'une dépendance par exemple)
+- **Les approvisionenurs / *provisioners***, qui sont des tâches qui peuvent alimenter une VM durant son exécution (installation d'une dépendance par exemple)
 - **Les VagrantFiles multi-machines** : un VagrantFile ne configure qu'une seule VM, mais peut gérer différentes instances de machine pour des cas particuliers (environnements...)
 
 ## Notions
