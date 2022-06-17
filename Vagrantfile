@@ -67,4 +67,9 @@ Vagrant.configure("2") do |config|
   #   apt-get update
   #   apt-get install -y apache2
   # SHELL
+
+  # Création d'un provisioner qui va se baser sur un script externe
+  config.vm.provision "shell", path: "provisioners/nginx-install.sh"
+  # Ce provisioner va s'exécuter à chaque lancement
+  config.vm.provision "shell", :run => 'always', path: "provisioners/write-in-file.sh"
 end
