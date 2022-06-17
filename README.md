@@ -27,7 +27,7 @@ Vagrant possède les 3 composants suivants :
 - **La synchronisation des dossiers** entre l'hôte et la VM
 - **Des configurations réseaux** : Vagrant supporte de diverses configurations de réseau (pour faire de l'inter-communication, du bridge, etc.)
 - **Les fournisseurs / *providers***, qui sont des plugins permettant d'utiliser des configurations spécifiques, relatives à un hyperviseur
-- **Les approvisionenurs / *provisioners***, qui sont des tâches qui peuvent alimenter une VM durant son exécution (installation d'une dépendance par exemple)
+- **Les approvisionenurs / *provisioners***, qui sont des utilitaires qui peuvent alimenter une VM durant son exécution (installation d'une dépendance par exemple)
 - **Les VagrantFiles multi-machines** : un VagrantFile ne configure qu'une seule VM, mais peut gérer différentes instances de machine pour des cas particuliers (environnements...)
 
 ## Notions
@@ -181,11 +181,49 @@ Ici on dit que le dossier `.../data` de l'hôte, va correspondre au dossier `/va
 ```
 On demande à ce que Virtualbox affiche le GUI au démarrage de la machine + que la RAM allouée est de 1024 Mo.
 
-- Approvisionner la Box :
+- Approvisionner / utiliser un *provisioner* sur la Box :
 ```ruby
   config.vm.provision "shell", inline: <<-SHELL
       apt-get update
       apt-get install -y apache2
   SHELL
 ```
-On demande ici, d'installer serveur Apache2, à l'exécution de la Box.
+On demande ici, d'installer serveur Apache2, à l'exécution de la Box. Comme il s'agit de l'exécution d'une commande shell, **on indique qu'on souhaite exécuter un provisioner `shell`**.
+
+Il est possible d'externaliser le contenu via un script à l'extérieur du VagrantFile.
+
+Il est possible **d'exécuter le provisioner à chaque démarrage** :
+
+```ruby
+  config.vm.provision "shell", :run => 'always',inline: <<-SHELL
+      apt-get update
+      apt-get install -y apache2
+  SHELL
+```
+
+Il existe d'autres provisioners :
+
+- `file` pour indiquer qu'on souhaite transmettre un fichier à la Box à l'exécution
+
+- `docker` pour demander d'exécuter des tâches relatives à Docker dans la Box, comme pour construire une image :
+  
+
+```ruby
+Vagrant.configure("2") do |config|
+  config.vm.box = "hashicorp/bionic64"
+  config.vm.provision "docker" do |d|
+    d.build_image "/vagrant/app" # chemin du Dockerfile
+  end
+end
+```
+
+Ou lancer une image / créer un conteneur Docker :
+
+```ruby
+Vagrant.configure("2") do |config|
+  config.vm.box = "hashicorp/bionic64"
+  config.vm.provision "docker" do |d|
+    d.run "rabbitmq" # exécution d'un conteneur basé sur l'image rabbitmq
+  end
+end
+```
