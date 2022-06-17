@@ -166,6 +166,7 @@ Il n'est pas isolé à la machine.
 config.vm.synced_folder "../data", "/vagrant_data"
 ```
 Ici on dit que le dossier `.../data` de l'hôte, va correspondre au dossier `/vagrant_data` de la box.
+
 **Remarque :** par défaut, Vagrant monte le dossier de l'environnement, dans le chemin `/vagrant` de la box.
 
 - On peut spécifier une configuration **spécique à l'hyperviseur** :
