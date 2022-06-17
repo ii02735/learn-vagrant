@@ -68,6 +68,11 @@ vagrant status
 vagrant halt
 ```
 
+- Pour **redémarrer** la Box :
+```sh
+vagrant reload
+```
+
 - Pour **supprimer** la Box :
 ```sh
 vagrant destroy
